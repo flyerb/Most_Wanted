@@ -12,10 +12,10 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      searchResults = filterByTrait(people);      // TODO: search by traits
       break;
-      default:
-    app(people); // restart app
+    default:
+      app(people); // restart app
       break;
   }
   
@@ -71,6 +71,74 @@ function searchByName(people){
   return foundPerson;
 }
 
+var personTraits = ["gender", "occupation", "eyeColor", "height", "weight"];
+  for(let i = 0; i < personTraits.length; i++){
+    let userInput = prompt("What is the suspect's " + personTraits[i]);
+    people = filterByTrait(userInput, personTraits[i], people);
+  }
+
+
+function filterByTrait(userInput, trait, people){
+  switch(trait){
+    case "gender":
+      return searchByGender(userInput, people);
+    case "occupation":
+      return searchByOccupation(userInput, people);
+    case "eyeColor":
+      return searchByEyeColor(userInput, people);
+    case "height":
+      return searchByHeight(userInput, people);
+    case "weight":
+      return searchByWeight(userInput, people);
+  }
+  return people;
+}
+function searchByGender(userInput, people){
+  let filteredPeople = people.filter(function(person){
+    if(person.gender === userInput){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return filteredPeople;
+}
+
+function searchByOccupation(userInput, people){
+  let filteredPeople = people.filter(function(person){
+    if(people.occupation === userInput){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return filteredPeople;
+}
+
+function searchByEyeColor(userInput, people){
+  let filteredPeople = people.filter(function(person){
+    if(people.eyeColor === userInput){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+}
+
+function searchByHeight(userInput, people){
+  let heightParsed = parseInt(userInput);
+  let filteredPeople = people.filter(function(person){
+    if(people.heightParsed === heightParsed){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+}
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
