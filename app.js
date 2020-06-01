@@ -46,7 +46,7 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      displayDescendants(person, people);
+      displayDescendants(person, people, tempArray);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -78,7 +78,7 @@ function getUserSearchTraits(people){
   var personTraits = ["gender", "occupation", "eyeColor", "height", "weight"];
   let filteredPeople = people;
   for(let i = 0; i < personTraits.length; i++){
-    let userInput = prompt("What is the suspect's " + personTraits[i]);
+    let userInput = promptFor("What is the suspect's " + personTraits[i], chars).toLowerCase();
     filteredPeople = filterByTrait(userInput, personTraits[i], filteredPeople);
     
     if (filteredPeople.length === 0){
@@ -190,8 +190,7 @@ function displayPerson(person){
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
-  personInfo += "Parents: " + person.parents + "\n";
-  personInfo += "Spouse: " + person.currentSpouse + "\n";
+
   
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
@@ -201,6 +200,7 @@ function displayPerson(person){
 function displayFamily(person, people){
   displaySpouse(person, people);
   displayParents(person, people);
+  displaySiblings(person, people);
 }
   
 
@@ -221,7 +221,7 @@ return spouse;
 function displayParents(person, people){
   let parent = people.filter(function(el){
   if(person.parents.includes(el.id)){
-    alert("This person's parents are " + " " + el.firstName + " " + el.lastName);
+    alert("This person's parents are " + el.firstName + " " + el.lastName);
     return true;
   }
   else{
@@ -239,13 +239,37 @@ function displayParents(person, people){
   return parent;
 }
 
-
-function displayDescendants(person, people){
-  if(person.id === people){
-    alert("Descendants of" + person + " are: " + people.parents);
-  }
-  //if person.id === someone elses parents id
+function displaySiblings(person, people){
+  let sibling = people.filter(function(el){
+    for (let i = 0; i < person.parents.length; i++){
+      if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[1]){
+        if(el.id != person.id){
+          alert("This person's sibling is " + el.firstName + " " + el.lastName);
+        }
+      return true;
+    }
+      else{
+      return false
+    }
+  }});
+  return sibling;
 }
+
+
+function displayDescendants(person, people, tempArray){
+  tempArray = [];
+  let descendant = people.filter(function(el){
+    if(person.id === el.parents){
+      tempArray.push(person.id);
+      return descendant;
+      
+  }else{
+    displayDescendants(person, people, tempArray);
+  }
+  
+});
+}
+
 
 
 // function that prompts and validates user input
