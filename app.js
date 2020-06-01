@@ -42,6 +42,7 @@ function mainMenu(person, people){
     break;
     case "family":
       displayFamily(person, people);
+    
     // TODO: get person's family
     break;
     case "descendants":
@@ -70,8 +71,7 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
-  return foundPerson;
+  return foundPerson[0];
 }
 
 function getUserSearchTraits(people){
@@ -197,7 +197,14 @@ function displayPerson(person){
   alert(personInfo);
 }
 
+
 function displayFamily(person, people){
+  displaySpouse(person, people);
+  displayParents(person, people);
+}
+  
+
+function displaySpouse(person, people){
 
 let spouse = people.filter(function(el){
   if(el.id === person.currentSpouse){
@@ -209,19 +216,28 @@ let spouse = people.filter(function(el){
   }
 });   
 return spouse;
-
-
-
 }
 
-
-
- // let familyInfo = person.currentSpouse
-//  if (person.currentSpouse === familyInfo.id){
- //   familyInfo.firstName + familyInfo.lastName;
- // } 
- // alert(familyInfo);
-//}
+function displayParents(person, people){
+  let parent = people.filter(function(el){
+  if(person.parents.includes(el.id)){
+    alert("This person's parents are " + " " + el.firstName + " " + el.lastName);
+    return true;
+  }
+  else{
+    return false
+  }
+    // for (let i = 0; i < person.parents.length; i++){
+    //   if(el.id === person.parents[0] || el.id === person.parents[1]){
+    //     return true;
+    //   }
+    //   else{
+    //     return false;
+    //   }
+    // }
+});      
+  return parent;
+}
 
 
 function displayDescendants(person, people){
