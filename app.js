@@ -12,7 +12,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      searchResults = filterByTrait(people);      // TODO: search by traits
+      searchResults = getUserSearchTraits(people);
       break;
     default:
       app(people); // restart app
@@ -71,27 +71,41 @@ function searchByName(people){
   return foundPerson;
 }
 
-var personTraits = ["gender", "occupation", "eyeColor", "height", "weight"];
+function getUserSearchTraits(people){
+  var personTraits = ["gender", "occupation", "eyeColor", "height", "weight"];
+  let filteredPeople = people;
   for(let i = 0; i < personTraits.length; i++){
     let userInput = prompt("What is the suspect's " + personTraits[i]);
-    people = filterByTrait(userInput, personTraits[i], people);
+    filteredPeople = filterByTrait(userInput, personTraits[i], filteredPeople);
+    
+    if (filteredPeople.length === 0){
+      alert("Found nobody.");
+      app(people);
+    }
+    else if(filteredPeople.length === 1){
+      mainMenu(filteredPeople[0], people);
+    }
+    else{
+      alert("People found:");
+      displayPeople(filteredPeople, people);
+    }
   }
+}
 
-
-function filterByTrait(userInput, trait, people){
-  switch(trait){
+function filterByTrait(userInput, selectedTrait, filteredPeople){
+  switch(selectedTrait){
     case "gender":
-      return searchByGender(userInput, people);
+      return searchByGender(userInput, filteredPeople);
     case "occupation":
-      return searchByOccupation(userInput, people);
+      return searchByOccupation(userInput, filteredPeople);
     case "eyeColor":
-      return searchByEyeColor(userInput, people);
+      return searchByEyeColor(userInput, filteredPeople);
     case "height":
-      return searchByHeight(userInput, people);
+      return searchByHeight(userInput, filteredPeople);
     case "weight":
-      return searchByWeight(userInput, people);
+      return searchByWeight(userInput, filteredPeople);
   }
-  return people;
+  return filteredPeople;
 }
 function searchByGender(userInput, people){
   let filteredPeople = people.filter(function(person){
@@ -107,7 +121,7 @@ function searchByGender(userInput, people){
 
 function searchByOccupation(userInput, people){
   let filteredPeople = people.filter(function(person){
-    if(people.occupation === userInput){
+    if(person.occupation === userInput){
       return true;
     }
     else{
@@ -119,25 +133,40 @@ function searchByOccupation(userInput, people){
 
 function searchByEyeColor(userInput, people){
   let filteredPeople = people.filter(function(person){
-    if(people.eyeColor === userInput){
+    if(person.eyeColor === userInput){
       return true;
     }
     else{
       return false;
     }
   });
+  return filteredPeople;
 }
 
 function searchByHeight(userInput, people){
   let heightParsed = parseInt(userInput);
   let filteredPeople = people.filter(function(person){
-    if(people.heightParsed === heightParsed){
+    if(person.heightParsed === heightParsed){
       return true;
     }
     else{
       return false;
     }
   });
+  return filteredPeople;
+}
+
+function searchByWeight(userInput, people){
+  let weightParsed = parseInt(userInput);
+  let filteredPeople = people.filter(function(person){
+    if(person.weightParsed === weightParsed){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return filteredPeople;
 }
 // alerts a list of people
 function displayPeople(people){
