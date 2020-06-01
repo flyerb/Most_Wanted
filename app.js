@@ -41,11 +41,11 @@ function mainMenu(person, people){
     // TODO: get person's info
     break;
     case "family":
-
+      displayFamily(person, people);
     // TODO: get person's family
     break;
     case "descendants":
-      
+      displayDescendants(person, people);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -185,17 +185,52 @@ function displayPerson(person){
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
-  personInfo += "Date of Birth: "  + person.dob + "\n";
+  personInfo += "Date of Birth: " + person.dob + "\n";
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
   personInfo += "Parents: " + person.parents + "\n";
-  personInfo += "Spouse: " + person.spouse + "\n";
+  personInfo += "Spouse: " + person.currentSpouse + "\n";
   
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+
+function displayFamily(person, people){
+
+let spouse = people.filter(function(el){
+  if(el.id === person.currentSpouse){
+    alert("Spouse name: " + el.firstName + " " + el.lastName);
+    return true;
+  }
+  else{
+    return false;
+  }
+});   
+return spouse;
+
+
+
+}
+
+
+
+ // let familyInfo = person.currentSpouse
+//  if (person.currentSpouse === familyInfo.id){
+ //   familyInfo.firstName + familyInfo.lastName;
+ // } 
+ // alert(familyInfo);
+//}
+
+
+function displayDescendants(person, people){
+  if(person.id === people){
+    alert("Descendants of" + person + " are: " + people.parents);
+  }
+  //if person.id === someone elses parents id
+}
+
 
 // function that prompts and validates user input
 function promptFor(question, valid){
