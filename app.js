@@ -46,7 +46,7 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      displayDescendants(person, people, tempArray);
+      displayDescendants(person, people);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -243,31 +243,34 @@ function displaySiblings(person, people){
   let sibling = people.filter(function(el){
     for (let i = 0; i < person.parents.length; i++){
       if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[1]){
-        if(el.id != person.id){
+        if(el.id != person.id){te
           alert("This person's sibling is " + el.firstName + " " + el.lastName);
         }
       return true;
     }
       else{
-      return false
+      return false;
     }
   }});
   return sibling;
 }
 
 
-function displayDescendants(person, people, tempArray){
-  tempArray = [];
+function displayDescendants(person, people){
+  let tempArray = [];
   let descendant = people.filter(function(el){
-    if(person.id === el.parents){
-      tempArray.push(person.id);
-      return descendant;
-      
-  }else{
-    displayDescendants(person, people, tempArray);
-  }
+    if(el.parents.includes(person.id)){
+      tempArray.push(el);
+      alert(tempArray);
+      return true;
+    }
+    else{
+      return false;
+    }
+
   
 });
+return descendant;
 }
 
 
