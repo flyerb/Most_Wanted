@@ -37,12 +37,15 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
+      displayPerson(person);
     // TODO: get person's info
     break;
     case "family":
+
     // TODO: get person's family
     break;
     case "descendants":
+      
     // TODO: get person's descendants
     break;
     case "restart":
@@ -84,6 +87,7 @@ function getUserSearchTraits(people){
     }
     else if(filteredPeople.length === 1){
       mainMenu(filteredPeople[0], people);
+      break;
     }
     else{
       alert("People found:");
@@ -180,6 +184,15 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Date of Birth: "  + person.dob + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Parents: " + person.parents + "\n";
+  personInfo += "Spouse: " + person.spouse + "\n";
+  
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
