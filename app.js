@@ -269,7 +269,8 @@ function displayDescendants(person, people, descendant){
 for (let i = 0; i < descendant.length; i++){
   person = descendant[i];
   displayDescendants(person, people, descendant); //if to break out
-  if(person.id != 0){
+  //if(descendant.includes(descendant)){
+  if(descendant.includes(person.id === person.parents)){
     break;
   }
 }
