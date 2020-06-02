@@ -46,7 +46,8 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      displayDescendants(person, people);
+      let descendant = [];
+      displayDescendants(person, people, descendant);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -243,7 +244,7 @@ function displaySiblings(person, people){
   let sibling = people.filter(function(el){
     for (let i = 0; i < person.parents.length; i++){
       if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[1]){
-        if(el.id != person.id){te
+        if(el.id != person.id){
           alert("This person's sibling is " + el.firstName + " " + el.lastName);
         }
       return true;
@@ -256,24 +257,24 @@ function displaySiblings(person, people){
 }
 
 
-function displayDescendants(person, people){
-  let tempArray = [];
-  let descendant = people.filter(function(el){
+function displayDescendants(person, people, descendant){
+  descendant = people.filter(function(el){
     if(el.parents.includes(person.id)){
-      tempArray.push(el);
-      alert(tempArray);
       return true;
     }
     else{
       return false;
     }
-
-  
 });
+for (let i = 0; i < descendant.length; i++){
+  person = descendant[i];
+  displayDescendants(person, people, descendant); //if to break out
+  if(person.id != 0){
+    break;
+  }
+}
 return descendant;
 }
-
-
 
 // function that prompts and validates user input
 function promptFor(question, valid){
